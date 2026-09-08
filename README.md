@@ -28,13 +28,11 @@ Version statique, sans dépendance ni build : un seul fichier [`index.html`](ind
 
 > Ne réutilisez pas une image trouvée sur un réseau social : une republication ne confère aucun droit. Les photographies du camp de Brownsea (août 1907) disponibles sur Wikimedia Commons sont de très faible résolution et signalées comme domaine public *aux États-Unis seulement* — insuffisant pour un site français. Passez par le détenteur du fonds.
 
-**Les formulaires ne sont pas raccordés.** En haut du `<script>` de `index.html` :
+**Les formulaires attendent un déploiement Netlify.** Ils sont câblés pour **Netlify Forms** : chaque formulaire porte un `name`, l'attribut `data-netlify="true"`, un champ caché `form-name` et un leurre anti-spam `bot-field`. Le JavaScript poste vers la racine du site (`ENDPOINT = '/'`), ce que Netlify intercepte pour déposer la soumission dans *Site configuration → Forms*. Aucun serveur à écrire.
 
-```js
-var ENDPOINT = '';
-```
+> ⚠️ **En local, le test est trompeur** : un simple serveur de fichiers répond `200` à un `POST` sur `/`, et le formulaire paraîtra fonctionner alors que rien n'est enregistré. Seul un déploiement Netlify permet de vérifier réellement.
 
-Tant que cette valeur est vide, les deux formulaires valident les champs mais **n'envoient rien**, et le disent au visiteur. Renseignez une URL acceptant un `POST` (Formspree, Basin, Netlify Forms, Google Apps Script…) et tout devient opérationnel, sans autre modification.
+Pour héberger ailleurs, remplacer `'/'` par l'URL d'un service acceptant un `POST` (Formspree, Basin, Google Apps Script…). Valeur vide : rien n'est envoyé et le formulaire l'annonce au visiteur.
 
 ## Choix techniques
 
@@ -51,4 +49,21 @@ Ouvrir `index.html` dans un navigateur — aucune installation nécessaire.
 
 ## Publication
 
-Le fichier étant nommé `index.html` à la racine, le dépôt peut être servi tel quel par GitHub Pages : *Settings → Pages → Deploy from a branch → `main` / `root`*.
+### Netlify Drop (dépôt privé accepté)
+
+Le dossier `deploy/`, exclu du versionnement, contient les seuls fichiers à mettre en ligne — `index.html` et `assets/`, sans `.git`. Le régénérer après chaque modification :
+
+```powershell
+Remove-Item deploy -Recurse -Force
+New-Item -ItemType Directory -Force deploy\assets
+Copy-Item index.html deploy\index.html
+Copy-Item assets\* deploy\assets\
+```
+
+Puis déposer le dossier `deploy` sur https://app.netlify.com/drop. Ne jamais déposer la racine du dépôt : `.git`, donc tout l'historique, se retrouverait publiquement accessible.
+
+Renommer l'URL attribuée dans *Site configuration → Site details → Change site name*.
+
+### GitHub Pages
+
+Le fichier étant nommé `index.html` à la racine, le dépôt peut aussi être servi tel quel : *Settings → Pages → Deploy from a branch → `main` / `root`*. **Le dépôt doit être public** — sur un compte gratuit, Pages ne publie pas un dépôt privé et l'URL renvoie « Site not found ».

@@ -725,7 +725,11 @@
       <h2>Réservez vos places, financez le spectacle</h2>
       <p class="intro">Trois formules, et <strong>aucun paiement encaissé aujourd'hui</strong> : nous enregistrons votre intention et nous vous recontactons dès l'ouverture officielle des pré-ventes.</p>
 
-      <form id="form-precommande" novalidate>
+      <form id="form-precommande" name="precommande" method="POST"
+            data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="precommande">
+        <p class="leurre" hidden><label>Ne rien écrire ici <input name="bot-field" tabindex="-1"></label></p>
+
         <fieldset class="formules">
           <legend class="legende-formules">Choisissez votre formule</legend>
 
@@ -791,7 +795,11 @@
       <p class="intro">Villes pilotes, ouverture des pré-ventes, coulisses de la création : recevez chaque nouvelle du spectacle avant tout le monde.</p>
 
       <div class="cadre-formulaire">
-        <form id="form-newsletter" novalidate>
+        <form id="form-newsletter" name="newsletter" method="POST"
+              data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="newsletter">
+          <p class="leurre" hidden><label>Ne rien écrire ici <input name="bot-field" tabindex="-1"></label></p>
+
           <div class="champs">
             <div class="champ">
               <label for="nl-prenom">Prénom <span class="requis" aria-hidden="true">*</span></label>
@@ -834,14 +842,22 @@
 
 <script>
   /* -------------------------------------------------------------------
-     Raccordement des formulaires.
+     Raccordement des formulaires — Netlify Forms.
 
-     ENDPOINT vide = rien n'est envoyé : le formulaire valide les champs
-     et le prévient honnêtement le visiteur. Renseigner une URL qui
-     accepte un POST (Formspree, Basin, Netlify Forms, Google Apps
-     Script…) suffit à le rendre opérationnel, sans autre changement.
+     Sur Netlify, poster vers la racine du site suffit : le service
+     reconnaît le formulaire grâce à data-netlify="true" et au champ
+     caché form-name, puis dépose la soumission dans le tableau de bord
+     (Site configuration → Forms). Aucun serveur à écrire.
+
+     Hébergé ailleurs, remplacer '/' par l'URL d'un service qui accepte
+     un POST (Formspree, Basin, Google Apps Script…). Valeur vide : rien
+     n'est envoyé et le formulaire le dit au visiteur.
+
+     Attention en local : un serveur de fichiers répond 200 à un POST
+     sur '/' et le formulaire semblera fonctionner. Seul un déploiement
+     Netlify permet de vérifier pour de vrai.
   ------------------------------------------------------------------- */
-  var ENDPOINT = '';
+  var ENDPOINT = '/';
 
   document.getElementById('annee').textContent = new Date().getFullYear();
 
@@ -903,20 +919,24 @@
         return;
       }
 
-      var donnees = new FormData(form);
-
       if (!ENDPOINT) {
         dire('Ce formulaire n’est pas encore raccordé : renseignez ENDPOINT dans index.html avant la mise en ligne (voir le README).', true);
         return;
       }
+
+      /* Netlify accepte le plus sûrement un corps urlencodé. */
+      var donnees = new URLSearchParams();
+      new FormData(form).forEach(function (valeur, cle) {
+        donnees.append(cle, valeur);
+      });
 
       bouton.disabled = true;
       bouton.textContent = 'Envoi…';
 
       fetch(ENDPOINT, {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: donnees
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: donnees.toString()
       }).then(function (r) {
         if (!r.ok) throw new Error(r.status);
         form.reset();
