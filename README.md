@@ -24,9 +24,9 @@ var ENDPOINT = '';
 
 Tant que cette valeur est vide, les deux formulaires valident les champs mais **n'envoient rien**, et le disent au visiteur. Renseignez une URL acceptant un `POST` (Formspree, Basin, Netlify Forms, Google Apps Script…) et tout devient opérationnel, sans autre modification.
 
-**L'image du héros est encore distante** : elle pointe vers l'application Lovable d'origine. Pour que le dépôt soit autonome, télécharger le fichier dans `assets/` et remplacer l'URL par un chemin relatif.
-
 ## Choix techniques
+
+- **Autonomie** — l'illustration du héros vit dans `assets/hero-feu.jpg` : le dépôt ne dépend d'aucune ressource externe hormis Google Fonts.
 
 - **Typographie** — Cormorant Garamond (titres), Karla (texte), Caveat (la note manuscrite), chargées depuis Google Fonts avec repli sur des polices système.
 - **Couleurs** — palette déclarée en variables CSS, chaque teinte donnée d'abord en hexadécimal puis en `oklch()` : les navigateurs récents prennent la seconde, les anciens gardent la première.
