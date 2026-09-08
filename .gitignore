@@ -1,0 +1,3 @@
+# Dossier fabrique pour le depot manuel sur Netlify Drop.
+# Il ne contient que des copies de fichiers deja suivis : inutile de le versionner.
+deploy/
