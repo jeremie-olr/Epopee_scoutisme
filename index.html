@@ -292,25 +292,134 @@
   }
   .volet .etiquette { margin-bottom: 0; font-size: .72rem; }
 
-  /* ---------- formules ---------- */
+  /* ---------- récit et photo du premier camp ---------- */
+  .recit {
+    margin-top: clamp(26px, 4vw, 38px);
+    display: grid;
+    gap: clamp(22px, 4vw, 40px);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 820px) {
+    .recit { grid-template-columns: 5fr 6fr; }
+  }
+  .photo-camp { margin: 0; }
+  .photo-camp img,
+  .photo-absente {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--filet);
+  }
+  .photo-camp img {
+    height: auto;
+    object-fit: cover;
+    filter: sepia(.2) saturate(.85) contrast(1.03);
+  }
+  .photo-absente {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 12px;
+    text-align: center;
+    background:
+      radial-gradient(60% 60% at 50% 45%, rgba(222, 128, 70, .1), transparent 70%),
+      var(--creme-clair);
+  }
+  .photo-absente p {
+    margin: 0;
+    font-family: var(--titre);
+    font-size: 1.3rem;
+    color: var(--foret);
+    line-height: 1.3;
+  }
+  .photo-absente span {
+    font-family: var(--texte);
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--brun);
+  }
+  .photo-camp figcaption {
+    margin-top: 10px;
+    font-size: .84rem;
+    font-style: italic;
+    color: var(--encre-douce);
+  }
+  .recit-texte { display: grid; gap: 14px; }
+  .recit-texte .intro { margin: 0; }
+
+  /* ---------- formules cliquables ---------- */
   .formules {
-    margin-top: clamp(32px, 5vw, 46px);
+    margin: clamp(32px, 5vw, 46px) 0 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
     display: grid;
     gap: 16px;
     grid-template-columns: 1fr;
   }
-  @media (min-width: 620px) { .formules { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 940px) { .formules { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 700px) { .formules { grid-template-columns: repeat(3, 1fr); } }
+
+  .legende-formules {
+    grid-column: 1 / -1;
+    float: left;   /* sort la légende du flux de grille sur les moteurs qui la traitent à part */
+    width: 100%;
+    padding: 0;
+    margin-bottom: 16px;
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--brun);
+  }
 
   .formule {
+    position: relative;
     background: var(--creme);
     border: 1px solid var(--filet-clair);
     border-top: 3px solid var(--or);
-    padding: 22px 20px 24px;
+    padding: 22px 52px 24px 20px;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    cursor: pointer;
+    transition: border-color .16s ease, background-color .16s ease, transform .16s ease;
   }
+  .formule:hover { border-color: var(--filet); transform: translateY(-2px); }
+  /* .choisie est posée en JavaScript : repli pour les navigateurs sans :has() */
+  .formule.choisie,
+  .formule:has(input:checked) {
+    background: var(--creme-clair);
+    border-color: var(--foret);
+    border-top-color: var(--foret);
+  }
+  .formule:has(input:focus-visible) {
+    outline: 2px solid var(--flamme);
+    outline-offset: 2px;
+  }
+
+  /* le bouton radio est lui-même la pastille visible */
+  .formule input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 1.5px solid var(--brun);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+  .formule input[type="radio"]:checked {
+    border-color: var(--foret);
+    background:
+      radial-gradient(circle at center, var(--foret) 0 5px, transparent 5.5px);
+  }
+
   .formule .montant {
     font-family: var(--titre);
     font-size: 2.1rem;
@@ -319,11 +428,20 @@
     color: var(--brique);
     font-variant-numeric: tabular-nums;
   }
-  .formule h3 { font-size: 1.2rem; color: var(--foret); }
-  .formule p {
-    margin: 0;
+  .formule .formule-nom {
+    font-family: var(--titre);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--foret);
+  }
+  .formule .formule-detail {
     font-size: .92rem;
     color: var(--encre-douce);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .formule { transition: none; }
+    .formule:hover { transform: none; }
   }
 
   /* ---------- formulaires ---------- */
@@ -527,9 +645,9 @@
     </div>
     <div class="heros-voile"></div>
     <div class="large">
-      <p class="cartouche">Pilote 2027 — en préparation</p>
+      <p class="cartouche">Pilote en préparation</p>
       <h1>L'Épopée du scoutisme</h1>
-      <p class="chapo">Un concert-spectacle familial pour revivre l'aventure scoute en chants, en histoires et en émotions.</p>
+      <p class="chapo">Vous connaissez déjà les chansons. Un concert-spectacle familial pour les chanter debout.</p>
       <div class="heros-actions">
         <a class="bouton bouton-plein" href="#precommandes">Pré-commander mes places</a>
         <a class="bouton bouton-vide" href="#newsletter">Rester informé</a>
@@ -542,18 +660,39 @@
     <div class="large">
       <p class="etiquette">Le projet</p>
       <h2>120 ans après le premier camp, l'aventure monte sur scène</h2>
-      <p class="intro">En 1907, Baden-Powell réunissait vingt garçons sur l'île de Brownsea. Depuis, des millions de jeunes ont chanté autour du feu. <strong>L'Épopée du scoutisme</strong> raconte cette histoire — et elle commence par vous.</p>
+
+      <div class="recit">
+        <figure class="photo-camp">
+          <img id="photo-camp" src="assets/premier-camp.jpg" width="1200" height="900"
+               alt="Le premier camp scout sur l'île de Brownsea, août 1907">
+          <div class="photo-absente" id="photo-absente" hidden>
+            <svg width="30" height="34" viewBox="0 0 26 30" aria-hidden="true" fill="none">
+              <path d="M13 2c1.6 4.2.4 6.3-1.4 8.4-2 2.3-4.6 4.4-4.6 8.2a6 6 0 0 0 12 0c0-2.6-1.3-4.3-2.6-6.1.3 1.6-.2 2.9-1.2 3.6.6-3.4-.8-6.2-2.2-8.5-.9-1.5-1.2-3.4 0-5.6Z" fill="#DE8046"/>
+              <path d="M4 27h18" stroke="#2B4535" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M6.5 24.5 19 27M19.5 24.5 7 27" stroke="#7B5637" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <p>Île de Brownsea<br><span>août 1907</span></p>
+          </div>
+          <figcaption>Le premier camp : vingt garçons, huit jours, une île du Dorset.</figcaption>
+        </figure>
+
+        <div class="recit-texte">
+          <p class="intro">Août 1907, île de Brownsea. Vingt garçons, huit jours de camp, quatre patrouilles — les Loups, les Corbeaux, les Courlis, les Taureaux.</p>
+          <p class="intro">Baden-Powell les réveillait au son d'une corne de koudou. Fils d'ouvriers et fils de notables dormaient sous la même tente : l'idée était déjà tout entière là.</p>
+          <p class="intro">Depuis, des millions de jeunes ont chanté autour du feu. <strong>L'Épopée du scoutisme</strong> raconte cette histoire — et elle commence par vous.</p>
+        </div>
+      </div>
 
       <div class="volets">
         <article class="volet">
           <p class="etiquette">Le spectacle</p>
-          <h3>75 à 90 minutes</h3>
-          <p>Chorale locale, narration, chants emblématiques et un grand moment final autour de la Promesse.</p>
+          <h3>90 minutes</h3>
+          <p>Une chorale, un récit, les chants que tout le monde connaît — et une salle debout sur la Promesse.</p>
         </article>
         <article class="volet">
           <p class="etiquette">Le calendrier</p>
-          <h3>Un pilote en 2027</h3>
-          <p>Quelques villes pilotes, 600 à 900 spectateurs par représentation — premières villes annoncées prochainement.</p>
+          <h3>Trois villes, juin 2027</h3>
+          <p>Paris, Lyon et Versailles ouvrent la route en juin 2027, pour 600 à 900 spectateurs par représentation.</p>
         </article>
         <article class="volet">
           <p class="etiquette">Le financement</p>
@@ -568,34 +707,33 @@
     <div class="large">
       <p class="etiquette">Pré-ventes</p>
       <h2>Réservez vos places, financez le spectacle</h2>
-      <p class="intro">Choisissez votre formule. <strong>Aucun paiement n'est encaissé aujourd'hui</strong> : nous enregistrons votre intention et nous vous recontactons dès l'ouverture officielle des pré-ventes.</p>
+      <p class="intro">Trois formules, et <strong>aucun paiement encaissé aujourd'hui</strong> : nous enregistrons votre intention et nous vous recontactons dès l'ouverture officielle des pré-ventes.</p>
 
-      <div class="formules">
-        <article class="formule">
-          <p class="montant">20 €</p>
-          <h3>Éclaireur</h3>
-          <p>1 place — vous allumez la première étincelle.</p>
-        </article>
-        <article class="formule">
-          <p class="montant">50 €</p>
-          <h3>Bâtisseur</h3>
-          <p>2 places — vous aidez à construire le spectacle.</p>
-        </article>
-        <article class="formule">
-          <p class="montant">100 €</p>
-          <h3>Pionnier</h3>
-          <p>4 places — vous portez la création du pilote.</p>
-        </article>
-        <article class="formule">
-          <p class="montant">250 € et +</p>
-          <h3>Grand camp</h3>
-          <p>Vous rendez possibles les premières représentations.</p>
-        </article>
-      </div>
+      <form id="form-precommande" novalidate>
+        <fieldset class="formules">
+          <legend class="legende-formules">Choisissez votre formule</legend>
 
-      <div class="cadre-formulaire">
-        <p class="titre-formulaire">Chaque place compte — sous réserve de confirmation</p>
-        <form id="form-precommande" novalidate>
+          <label class="formule">
+            <input type="radio" name="formule" value="Éclaireur — 60 € (1 place premium + le livret)" required>
+            <span class="montant">60 €</span>
+            <span class="formule-nom">Éclaireur</span>
+            <span class="formule-detail">1 place premium et le livret du spectacle.</span>          </label>
+
+          <label class="formule">
+            <input type="radio" name="formule" value="Pionnier — 110 € (2 places premium + 2 livrets)">
+            <span class="montant">110 €</span>
+            <span class="formule-nom">Pionnier</span>
+            <span class="formule-detail">2 places premium et 2 livrets du spectacle.</span>          </label>
+
+          <label class="formule">
+            <input type="radio" name="formule" value="Grand camp — 250 € et +">
+            <span class="montant">250 € et +</span>
+            <span class="formule-nom">Grand camp</span>
+            <span class="formule-detail">Vous rendez possibles les premières représentations : votre nom au programme, 4 places premium et l'accès à la répétition générale.</span>          </label>
+        </fieldset>
+
+        <div class="cadre-formulaire">
+          <p class="titre-formulaire">Chaque place compte — sous réserve de confirmation</p>
           <div class="champs">
             <div class="champ">
               <label for="pc-prenom">Prénom <span class="requis" aria-hidden="true">*</span></label>
@@ -613,16 +751,6 @@
               <label for="pc-ville">Ville <span class="requis" aria-hidden="true">*</span></label>
               <input id="pc-ville" name="ville" type="text" autocomplete="address-level2" required>
             </div>
-            <div class="champ pleine">
-              <label for="pc-formule">Formule souhaitée</label>
-              <select id="pc-formule" name="formule">
-                <option value="">Choisir…</option>
-                <option>Éclaireur — 20 € (1 place)</option>
-                <option>Bâtisseur — 50 € (2 places)</option>
-                <option>Pionnier — 100 € (4 places)</option>
-                <option>Grand camp — 250 € et +</option>
-              </select>
-            </div>
             <div class="pleine">
               <label class="case">
                 <input type="checkbox" name="newsletter" value="oui" checked>
@@ -631,12 +759,12 @@
             </div>
           </div>
           <div class="pied-formulaire">
-            <button class="bouton bouton-plein" type="submit">Réserver mes places</button>
+            <button class="bouton bouton-plein" type="submit">Je soutiens le projet</button>
             <p class="mention">Aucun paiement n'est encaissé à ce stade : vous serez contacté pour confirmer votre réservation.</p>
           </div>
           <p class="retour" id="retour-precommande" hidden role="status"></p>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -701,6 +829,35 @@
 
   document.getElementById('annee').textContent = new Date().getFullYear();
 
+  /* Tant que assets/premier-camp.jpg n'existe pas, un cartouche typographique
+     prend sa place — la section reste présentable sans image cassée. */
+  (function () {
+    var photo = document.getElementById('photo-camp');
+    var repli = document.getElementById('photo-absente');
+    function basculer() {
+      photo.hidden = true;
+      repli.hidden = false;
+    }
+    if (photo.complete && photo.naturalWidth === 0) basculer();
+    photo.addEventListener('error', basculer);
+  })();
+
+  /* Surbrillance de la formule choisie. */
+  (function () {
+    var cartes = [].slice.call(document.querySelectorAll('.formule'));
+    function marquer() {
+      cartes.forEach(function (carte) {
+        var radio = carte.querySelector('input[type="radio"]');
+        carte.classList.toggle('choisie', !!(radio && radio.checked));
+      });
+    }
+    cartes.forEach(function (carte) {
+      var radio = carte.querySelector('input[type="radio"]');
+      if (radio) radio.addEventListener('change', marquer);
+    });
+    marquer();
+  })();
+
   function brancher(idForm, idRetour, messageSucces) {
     var form = document.getElementById(idForm);
     var retour = document.getElementById(idRetour);
@@ -717,6 +874,13 @@
       e.preventDefault();
 
       if (!form.checkValidity()) {
+        var formules = form.querySelectorAll('input[name="formule"]');
+        var choisie = form.querySelector('input[name="formule"]:checked');
+        if (formules.length && !choisie) {
+          formules[0].focus();
+          dire('Choisissez d’abord une formule ci-dessus.', true);
+          return;
+        }
         var premier = form.querySelector(':invalid');
         if (premier) premier.focus();
         dire('Merci de compléter les champs obligatoires.', true);

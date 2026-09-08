@@ -10,11 +10,13 @@ Version statique, sans dépendance ni build : un seul fichier [`index.html`](ind
 |---|---|
 | Héros | Titre, promesse, deux appels à l'action, mention du financement par les pré-ventes |
 | Le projet | Le récit depuis Brownsea 1907, puis trois volets : le spectacle, le calendrier, le financement |
-| Pré-ventes | Quatre formules (Éclaireur, Bâtisseur, Pionnier, Grand camp) et le formulaire de réservation |
+| Pré-ventes | Trois formules cliquables (Éclaireur 60 €, Pionnier 110 €, Grand camp 250 € et +) et le formulaire de soutien |
 | Newsletter | Formulaire d'inscription aux nouvelles du projet |
 | Pied de page | Rappel du statut « projet en construction » |
 
 ## ⚠️ À faire avant la mise en ligne
+
+**La photo du premier camp manque.** La section « Le projet » attend un fichier `assets/premier-camp.jpg` (cadrage 4/3 conseillé). Tant qu'il est absent, un cartouche typographique prend sa place automatiquement — aucune image cassée, mais pas de photo. Déposez le fichier à ce chemin et il s'affiche sans autre changement.
 
 **Les formulaires ne sont pas raccordés.** En haut du `<script>` de `index.html` :
 
