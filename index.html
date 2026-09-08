@@ -304,18 +304,16 @@
     .recit { grid-template-columns: 5fr 6fr; }
   }
   .photo-camp { margin: 0; }
-  .photo-camp img,
+  /* ratio naturel : recadrer une photo de groupe couperait les personnes */
+  .photo-camp img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--filet);
+  }
   .photo-absente {
     width: 100%;
     aspect-ratio: 4 / 3;
     border: 1px solid var(--filet);
-  }
-  .photo-camp img {
-    height: auto;
-    object-fit: cover;
-    filter: sepia(.2) saturate(.85) contrast(1.03);
-  }
-  .photo-absente {
     display: grid;
     place-content: center;
     justify-items: center;
@@ -355,6 +353,7 @@
     color: var(--brun);
   }
   .photo-camp .credit:empty { display: none; }
+  .photo-camp .credit sup { font-size: .78em; line-height: 0; }
   .recit-texte { display: grid; gap: 14px; }
   .recit-texte .intro { margin: 0; }
 
@@ -672,7 +671,7 @@
 
       <div class="recit">
         <figure class="photo-camp">
-          <img id="photo-camp" src="assets/premier-camp.jpg" width="1200" height="900"
+          <img id="photo-camp" src="assets/premier-camp.jpg" width="963" height="545"
                alt="Le premier camp scout sur l'île de Brownsea, août 1907">
           <div class="photo-absente" id="photo-absente" hidden>
             <svg width="30" height="34" viewBox="0 0 26 30" aria-hidden="true" fill="none">
@@ -684,11 +683,7 @@
           </div>
           <figcaption>
             Le premier camp : vingt garçons, huit jours, une île du Dorset.
-            <!-- Crédit photo : écrire le fonds d'archives et la licence entre les
-                 balises ci-dessous, par exemple :
-                 Photo : The Scout Association Heritage Service — reproduite avec autorisation.
-                 Laissée vide, la ligne ne s'affiche pas. -->
-            <span class="credit"></span>
+            <span class="credit">Photographie anonyme, 1<sup>er</sup> août 1907 — domaine public. Source&nbsp;: Wikimedia Commons.</span>
           </figcaption>
         </figure>
 
