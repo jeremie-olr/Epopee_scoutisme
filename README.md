@@ -18,6 +18,16 @@ Version statique, sans dépendance ni build : un seul fichier [`index.html`](ind
 
 **La photo du premier camp manque.** La section « Le projet » attend un fichier `assets/premier-camp.jpg` (cadrage 4/3 conseillé). Tant qu'il est absent, un cartouche typographique prend sa place automatiquement — aucune image cassée, mais pas de photo. Déposez le fichier à ce chemin et il s'affiche sans autre changement.
 
+**Le crédit photo est à renseigner** en même temps, dans la légende de la figure :
+
+```html
+<span class="credit"></span>
+```
+
+Écrire entre les balises le fonds d'archives et les conditions de réutilisation, par exemple `Photo : The Scout Association Heritage Service — reproduite avec autorisation.` Laissée vide, la ligne est masquée (`:empty`), donc rien d'inesthétique ne s'affiche avant qu'elle soit remplie.
+
+> Ne réutilisez pas une image trouvée sur un réseau social : une republication ne confère aucun droit. Les photographies du camp de Brownsea (août 1907) disponibles sur Wikimedia Commons sont de très faible résolution et signalées comme domaine public *aux États-Unis seulement* — insuffisant pour un site français. Passez par le détenteur du fonds.
+
 **Les formulaires ne sont pas raccordés.** En haut du `<script>` de `index.html` :
 
 ```js

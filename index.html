@@ -346,6 +346,15 @@
     font-style: italic;
     color: var(--encre-douce);
   }
+  .photo-camp .credit {
+    display: block;
+    margin-top: 5px;
+    font-style: normal;
+    font-size: .76rem;
+    letter-spacing: .01em;
+    color: var(--brun);
+  }
+  .photo-camp .credit:empty { display: none; }
   .recit-texte { display: grid; gap: 14px; }
   .recit-texte .intro { margin: 0; }
 
@@ -673,7 +682,14 @@
             </svg>
             <p>Île de Brownsea<br><span>août 1907</span></p>
           </div>
-          <figcaption>Le premier camp : vingt garçons, huit jours, une île du Dorset.</figcaption>
+          <figcaption>
+            Le premier camp : vingt garçons, huit jours, une île du Dorset.
+            <!-- Crédit photo : écrire le fonds d'archives et la licence entre les
+                 balises ci-dessous, par exemple :
+                 Photo : The Scout Association Heritage Service — reproduite avec autorisation.
+                 Laissée vide, la ligne ne s'affiche pas. -->
+            <span class="credit"></span>
+          </figcaption>
         </figure>
 
         <div class="recit-texte">
