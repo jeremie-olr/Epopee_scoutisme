@@ -3,424 +3,763 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>L'art de dire bonjour</title>
-<meta name="description" content="Une page qui dit bonjour selon l'heure réelle, avec les usages français du salut : la règle de la seule fois, la bise par région, la formule de départ.">
+<title>L'Épopée du scoutisme — pré-commandez vos places, pilote 2027</title>
+<meta name="description" content="Un concert-spectacle familial pour revivre l'aventure scoute en chants, en histoires et en émotions. Pilote 2027 — les pré-ventes financent la création du spectacle.">
+<meta property="og:title" content="L'Épopée du scoutisme">
+<meta property="og:description" content="Un concert-spectacle familial pour revivre l'aventure scoute en chants, en histoires et en émotions. Pilote 2027.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#22314E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Karla:wght@400;500;700&family=Caveat:wght@500&display=swap">
 
 <style>
   :root {
-    color-scheme: light dark;
+    /* teintes de repli, puis les mêmes en oklch pour les navigateurs récents */
+    --creme: #FAF6EC;          --creme: oklch(.965 .018 88);
+    --creme-clair: #FDFAF2;    --creme-clair: oklch(.982 .014 88);
+    --encre: #362A20;          --encre: oklch(.24 .035 60);
+    --encre-douce: #6E6357;    --encre-douce: oklch(.48 .03 60);
+    --brun: #7B5637;           --brun: oklch(.45 .075 58);
+    --foret: #2B4535;          --foret: oklch(.33 .055 152);
+    --nuit: #22314E;           --nuit: oklch(.26 .05 255);
+    --brique: #A94B32;         --brique: oklch(.48 .13 32);
+    --flamme: #DE8046;         --flamme: oklch(.7 .16 55);
+    --or: #E8B45C;             --or: oklch(.8 .13 80);
 
-    --ground: #EDEBE2;
-    --ink: #14251F;
-    --muted: #56645D;
-    --enamel: #123A63;
-    --wagon: #1E4437;
-    --brass: #9C7719;
-    --rule: rgba(20, 37, 31, .20);
-    --rule-soft: rgba(20, 37, 31, .10);
-    --fill: rgba(20, 37, 31, .04);
+    --filet: rgba(54, 42, 32, .16);
+    --filet-clair: rgba(54, 42, 32, .09);
 
-    --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
-    --body: "Karla", "Helvetica Neue", Arial, sans-serif;
-    --mono: "IBM Plex Mono", "Courier New", monospace;
-  }
+    --titre: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --texte: "Karla", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --main: "Caveat", "Segoe Script", cursive;
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground: #0E2340;
-      --ink: #E9E7DD;
-      --muted: #9DAEBE;
-      --enamel: #A9C6E4;
-      --wagon: #83B79E;
-      --brass: #D9B14A;
-      --rule: rgba(233, 231, 221, .22);
-      --rule-soft: rgba(233, 231, 221, .12);
-      --fill: rgba(233, 231, 221, .05);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --ground: #0E2340;
-    --ink: #E9E7DD;
-    --muted: #9DAEBE;
-    --enamel: #A9C6E4;
-    --wagon: #83B79E;
-    --brass: #D9B14A;
-    --rule: rgba(233, 231, 221, .22);
-    --rule-soft: rgba(233, 231, 221, .12);
-    --fill: rgba(233, 231, 221, .05);
+    --colonne: 68rem;
   }
 
   * { box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
   body {
     margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 16px;
-    line-height: 1.55;
+    background: var(--creme);
+    color: var(--encre);
+    font-family: var(--texte);
+    font-size: 17px;
+    line-height: 1.62;
     -webkit-font-smoothing: antialiased;
-    padding: clamp(14px, 3vw, 40px);
   }
 
-  img { max-width: 100%; }
+  img { max-width: 100%; display: block; }
   [hidden] { display: none !important; }
 
-  /* --- le cartouche : filets doubles, comme une plaque émaillée --- */
-  .plaque {
-    position: relative;
-    max-width: 66rem;
-    margin: 0 auto;
-    border: 1px solid var(--rule);
-    border-radius: 20px;
-    padding: clamp(20px, 4vw, 54px);
-  }
-  .plaque::before {
-    content: "";
-    position: absolute;
-    inset: 7px;
-    border: 1px solid var(--rule-soft);
-    border-radius: 14px;
-    pointer-events: none;
+  h1, h2, h3 {
+    font-family: var(--titre);
+    font-weight: 600;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+    margin: 0;
   }
 
-  /* --- bandeau --- */
-  .bandeau {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px 24px;
-    font-family: var(--mono);
-    font-size: .72rem;
+  a { color: var(--brique); }
+
+  .lien-evitement {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--nuit);
+    color: var(--creme);
+    padding: 10px 16px;
+    z-index: 100;
+  }
+  .lien-evitement:focus { left: 8px; top: 8px; }
+
+  .large { width: 100%; max-width: var(--colonne); margin-inline: auto; padding-inline: clamp(20px, 5vw, 40px); }
+
+  /* ---------- étiquettes et boutons ---------- */
+  .etiquette {
+    font-family: var(--texte);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--brun);
+    margin: 0 0 14px;
+  }
+
+  .bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--texte);
+    font-size: .875rem;
+    font-weight: 700;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--muted);
+    text-decoration: none;
+    padding: 14px 24px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease;
   }
-  .bandeau .lieu { color: var(--muted); }
-  .bandeau .heure {
-    color: var(--brass);
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    text-transform: none; /* le « h » de 14 h 32 reste en bas de casse */
+  .bouton-plein {
+    background: var(--brique);
+    color: var(--creme);
+  }
+  .bouton-plein:hover { background: var(--flamme); }
+  .bouton-vide {
+    background: transparent;
+    color: var(--creme);
+    border-color: rgba(250, 246, 236, .45);
+  }
+  .bouton-vide:hover { border-color: var(--or); color: var(--or); }
+  .bouton-vide-sombre {
+    background: transparent;
+    color: var(--foret);
+    border-color: var(--filet);
+  }
+  .bouton-vide-sombre:hover { border-color: var(--foret); }
+  .bouton:focus-visible {
+    outline: 2px solid var(--or);
+    outline-offset: 3px;
   }
 
-  /* --- le mot --- */
-  .mot {
-    font-family: var(--display);
+  /* ---------- entête ---------- */
+  .entete {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 246, 236, .92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--filet-clair);
+  }
+  .entete .large {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 74px;
+  }
+  .marque {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--titre);
+    font-size: 1.22rem;
+    line-height: 1.15;
+    color: var(--foret);
+    text-decoration: none;
+    max-width: 15ch;
+  }
+  .marque svg { flex: none; }
+  .entete nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 22px);
+  }
+  .lien-sobre {
+    font-size: .8rem;
     font-weight: 700;
-    font-size: clamp(3.9rem, 21vw, 15rem);
-    line-height: .86;
-    letter-spacing: -.035em;
-    margin: clamp(24px, 5vw, 48px) 0 0;
-    text-wrap: balance;
-    word-break: break-word;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--encre-douce);
+    text-decoration: none;
   }
-  .mot span {
-    display: inline-block;
-    animation: leve .7s cubic-bezier(.2, .8, .2, 1) both;
-  }
-  .mot .virgule { color: var(--brass); }
-
-  @keyframes leve {
-    from { opacity: 0; transform: translateY(.14em); }
-    to   { opacity: 1; transform: none; }
+  .lien-sobre:hover { color: var(--brique); }
+  .lien-sobre:focus-visible { outline: 2px solid var(--brique); outline-offset: 3px; }
+  @media (max-width: 560px) {
+    .entete .lien-sobre { display: none; }
   }
 
-  .note {
-    max-width: 34em;
-    margin: clamp(18px, 3vw, 26px) 0 0;
-    font-size: clamp(1.02rem, 1.5vw, 1.2rem);
-    color: var(--ink);
+  /* ---------- héros ---------- */
+  .heros {
+    position: relative;
+    background: var(--nuit);
+    color: var(--creme);
+    overflow: hidden;
+    isolation: isolate;
   }
-  .note em { font-style: italic; color: var(--muted); }
+  .heros-image {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .heros-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
+  }
+  .heros-voile {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(70% 60% at 50% 62%, rgba(222, 128, 70, .22), transparent 70%),
+      linear-gradient(to bottom, rgba(34, 49, 78, .82), rgba(34, 49, 78, .93));
+  }
+  .heros .large {
+    padding-block: clamp(64px, 11vw, 112px);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(20px, 3vw, 28px);
+  }
+  .cartouche {
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--or);
+    border: 1px solid rgba(232, 180, 92, .55);
+    padding: 9px 20px;
+    transform: rotate(-1.4deg);
+  }
+  .heros h1 {
+    font-size: clamp(2.7rem, 7vw, 4.5rem);
+    line-height: 1.02;
+    margin: 0;
+    max-width: 22ch;
+  }
+  .heros .chapo {
+    font-size: clamp(1.05rem, 2vw, 1.22rem);
+    max-width: 34ch;
+    margin: 0;
+    color: rgba(250, 246, 236, .88);
+  }
+  .heros-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .manuscrit {
+    font-family: var(--main);
+    font-size: 1.32rem;
+    line-height: 1.35;
+    color: var(--or);
+    margin: 0;
+    max-width: 30ch;
+  }
 
-  /* --- registre --- */
-  .registre {
-    margin-top: clamp(24px, 4vw, 34px);
+  /* ---------- sections ---------- */
+  .section { padding-block: clamp(56px, 8vw, 96px); }
+  .section-creme { background: var(--creme); }
+  .section-voile { background: var(--creme-clair); }
+  .section h2 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    line-height: 1.12;
+    color: var(--foret);
+    max-width: 26ch;
+  }
+  .intro {
+    margin: 18px 0 0;
+    max-width: 58ch;
+    color: var(--encre-douce);
+    font-size: 1.03rem;
+  }
+  .intro strong { color: var(--encre); }
+
+  /* trois volets du projet — libellés, pas de numérotation décorative */
+  .volets {
+    margin-top: clamp(36px, 5vw, 52px);
+    display: grid;
+    gap: clamp(24px, 4vw, 36px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 780px) {
+    .volets { grid-template-columns: repeat(3, 1fr); }
+  }
+  .volet {
+    border-top: 2px solid var(--flamme);
+    padding-top: 18px;
+  }
+  .volet h3 {
+    font-size: 1.45rem;
+    color: var(--foret);
+    margin: 6px 0 8px;
+  }
+  .volet p {
+    margin: 0;
+    color: var(--encre-douce);
+    font-size: .97rem;
+  }
+  .volet .etiquette { margin-bottom: 0; font-size: .72rem; }
+
+  /* ---------- formules ---------- */
+  .formules {
+    margin-top: clamp(32px, 5vw, 46px);
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 620px) { .formules { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 940px) { .formules { grid-template-columns: repeat(4, 1fr); } }
+
+  .formule {
+    background: var(--creme);
+    border: 1px solid var(--filet-clair);
+    border-top: 3px solid var(--or);
+    padding: 22px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .formule .montant {
+    font-family: var(--titre);
+    font-size: 2.1rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--brique);
+    font-variant-numeric: tabular-nums;
+  }
+  .formule h3 { font-size: 1.2rem; color: var(--foret); }
+  .formule p {
+    margin: 0;
+    font-size: .92rem;
+    color: var(--encre-douce);
+  }
+
+  /* ---------- formulaires ---------- */
+  .cadre-formulaire {
+    margin-top: clamp(32px, 5vw, 46px);
+    background: var(--creme);
+    border: 1px solid var(--filet-clair);
+    padding: clamp(22px, 4vw, 34px);
+  }
+  .section-nuit .cadre-formulaire,
+  .section-foret .cadre-formulaire {
+    background: rgba(250, 246, 236, .07);
+    border-color: rgba(250, 246, 236, .22);
+  }
+  .titre-formulaire {
+    font-size: .76rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--brun);
+    margin: 0 0 20px;
+  }
+  .section-foret .titre-formulaire { color: var(--or); }
+
+  .champs {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .champs { grid-template-columns: repeat(2, 1fr); }
+    .champs .pleine { grid-column: 1 / -1; }
+  }
+
+  .champ { display: flex; flex-direction: column; gap: 6px; }
+  .champ label {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--encre-douce);
+  }
+  .section-foret .champ label { color: rgba(250, 246, 236, .78); }
+  .champ .requis { color: var(--brique); }
+  .section-foret .champ .requis { color: var(--or); }
+
+  .champ input,
+  .champ select {
+    font-family: var(--texte);
+    font-size: 1rem;
+    color: var(--encre);
+    background: var(--creme-clair);
+    border: 1px solid var(--filet);
+    border-radius: 2px;
+    padding: 11px 12px;
+    width: 100%;
+  }
+  .section-foret .champ input,
+  .section-foret .champ select {
+    background: rgba(253, 250, 242, .95);
+  }
+  .champ input:focus-visible,
+  .champ select:focus-visible {
+    outline: 2px solid var(--flamme);
+    outline-offset: 1px;
+    border-color: var(--flamme);
+  }
+  .champ input:user-invalid {
+    border-color: var(--brique);
+  }
+
+  .case {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: .95rem;
+    color: var(--encre-douce);
+  }
+  .section-foret .case { color: rgba(250, 246, 236, .8); }
+  .case input {
+    margin: 4px 0 0;
+    accent-color: var(--brique);
+    flex: none;
+  }
+
+  .pied-formulaire {
+    margin-top: 22px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 14px 20px;
   }
-  .boutons {
-    display: inline-flex;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    padding: 3px;
-    gap: 3px;
-    background: var(--fill);
-  }
-  .boutons button {
-    font-family: var(--mono);
-    font-size: .7rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: 0;
-    border-radius: 999px;
-    padding: 7px 15px;
-    cursor: pointer;
-    transition: color .18s, background-color .18s;
-  }
-  .boutons button:hover { color: var(--ink); }
-  .boutons button[aria-pressed="true"] {
-    background: var(--wagon);
-    color: var(--ground);
-  }
-  .boutons button:focus-visible {
-    outline: 2px solid var(--brass);
-    outline-offset: 2px;
-  }
-  .phrase {
-    font-family: var(--display);
-    font-weight: 500;
-    font-style: italic;
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    line-height: 1.2;
-    color: var(--enamel);
+  .mention {
     margin: 0;
+    font-size: .86rem;
+    color: var(--encre-douce);
+    max-width: 42ch;
   }
+  .section-foret .mention { color: rgba(250, 246, 236, .72); }
 
-  /* --- les usages --- */
-  .usages {
-    margin-top: clamp(40px, 6vw, 66px);
-    border-top: 1px solid var(--rule);
-    padding-top: 4px;
-    display: grid;
-    gap: 0 clamp(24px, 4vw, 44px);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 760px) {
-    .usages { grid-template-columns: repeat(3, 1fr); }
-    .usage + .usage { border-top: 0; }
-  }
-  .usage {
-    padding: clamp(22px, 3vw, 30px) 0 4px;
-  }
-  .usage + .usage { border-top: 1px solid var(--rule-soft); }
-  .usage h2 {
-    font-family: var(--mono);
-    font-size: .7rem;
-    font-weight: 500;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--brass);
-    margin: 0 0 12px;
-  }
-  .usage p {
-    margin: 0 0 10px;
+  .retour {
+    margin: 18px 0 0;
+    padding: 14px 16px;
+    border-left: 3px solid var(--foret);
+    background: rgba(43, 69, 53, .07);
     font-size: .95rem;
-    color: var(--muted);
-    max-width: 30em;
   }
-  .usage p strong { color: var(--ink); font-weight: 700; }
-
-  .bises {
-    margin: 0;
-    display: grid;
-    gap: 1px;
-    font-size: .9rem;
-  }
-  .bises > div {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 7px 0;
-    border-bottom: 1px solid var(--rule-soft);
-  }
-  .bises dt { color: var(--muted); }
-  .bises dd {
-    margin: 0;
-    font-family: var(--mono);
-    font-variant-numeric: tabular-nums;
-    color: var(--ink);
-    white-space: nowrap;
+  .retour.erreur { border-left-color: var(--brique); background: rgba(169, 75, 50, .08); }
+  .section-foret .retour {
+    border-left-color: var(--or);
+    background: rgba(250, 246, 236, .1);
+    color: var(--creme);
   }
 
-  .horaires {
-    margin: 0;
-    font-size: .9rem;
-    display: grid;
-    gap: 7px;
+  /* ---------- sections sombres ---------- */
+  .section-foret {
+    background: var(--foret);
+    color: var(--creme);
   }
-  .horaires > div {
-    display: grid;
-    grid-template-columns: 5.4em 1fr;
-    gap: 10px;
-  }
-  .horaires dt {
-    font-family: var(--mono);
-    font-size: .8rem;
-    color: var(--brass);
-    font-variant-numeric: tabular-nums;
-  }
-  .horaires dd { margin: 0; color: var(--muted); }
-  .horaires dd b { color: var(--ink); font-weight: 700; }
+  .section-foret h2 { color: var(--creme); }
+  .section-foret .etiquette { color: var(--or); }
+  .section-foret .intro { color: rgba(250, 246, 236, .84); }
+  .section-foret .intro strong { color: var(--creme); }
 
-  /* --- pied --- */
+  /* ---------- pied de page ---------- */
   .pied {
-    margin-top: clamp(34px, 5vw, 54px);
-    border-top: 1px solid var(--rule);
-    padding-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 8px 24px;
-    font-family: var(--mono);
-    font-size: .68rem;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
+    background: var(--nuit);
+    color: rgba(250, 246, 236, .78);
+    padding-block: clamp(40px, 6vw, 60px);
   }
-  .pied .litteral { text-transform: none; }
+  .pied .large {
+    display: grid;
+    gap: 26px;
+  }
+  @media (min-width: 780px) {
+    .pied .large { grid-template-columns: 1.4fr 1fr; align-items: start; }
+  }
+  .pied h2 {
+    font-size: 1.5rem;
+    color: var(--creme);
+    margin-bottom: 10px;
+  }
+  .pied p { margin: 0; font-size: .95rem; max-width: 46ch; }
+  .pied-liens {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .pied-liens a {
+    color: var(--or);
+    text-decoration: none;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .pied-liens a:hover { text-decoration: underline; }
+  .pied-liens a:focus-visible { outline: 2px solid var(--or); outline-offset: 3px; }
+  .copyright {
+    border-top: 1px solid rgba(250, 246, 236, .18);
+    margin-top: 30px;
+    padding-top: 18px;
+    font-size: .84rem;
+    color: rgba(250, 246, 236, .6);
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .mot span { animation: none; }
-    .boutons button { transition: none; }
+    .bouton { transition: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="plaque">
-  <div class="bandeau">
-    <span class="lieu">France&nbsp;· <span id="date">mardi 8 septembre</span></span>
-    <span class="heure" id="heure">—</span>
+<a class="lien-evitement" href="#projet">Aller au contenu</a>
+
+<header class="entete">
+  <div class="large">
+    <a class="marque" href="#haut">
+      <svg width="26" height="30" viewBox="0 0 26 30" aria-hidden="true" fill="none">
+        <path d="M13 2c1.6 4.2.4 6.3-1.4 8.4-2 2.3-4.6 4.4-4.6 8.2a6 6 0 0 0 12 0c0-2.6-1.3-4.3-2.6-6.1.3 1.6-.2 2.9-1.2 3.6.6-3.4-.8-6.2-2.2-8.5-.9-1.5-1.2-3.4 0-5.6Z" fill="#DE8046"/>
+        <path d="M4 27h18" stroke="#2B4535" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M6.5 24.5 19 27M19.5 24.5 7 27" stroke="#7B5637" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      L'Épopée du scoutisme
+    </a>
+    <nav>
+      <a class="lien-sobre" href="#newsletter">Rester informé</a>
+      <a class="bouton bouton-plein" href="#precommandes">Pré-commander</a>
+    </nav>
   </div>
+</header>
 
-  <h1 class="mot" id="mot" aria-label="Bonjour"></h1>
+<main id="haut">
 
-  <p class="note" id="note"></p>
-
-  <div class="registre">
-    <div class="boutons" role="group" aria-label="Registre">
-      <button type="button" id="btn-vous" aria-pressed="true">Vouvoiement</button>
-      <button type="button" id="btn-tu" aria-pressed="false">Tutoiement</button>
+  <section class="heros">
+    <div class="heros-image">
+      <img src="https://epopee-campire-story.lovable.app/assets/hero-feu-_UD-VxNS.jpg"
+           alt="Scouts rassemblés autour d'un feu de camp au crépuscule, illustration d'affiche patrimoniale"
+           width="1600" height="1104" fetchpriority="high">
     </div>
-    <p class="phrase" id="phrase"></p>
-  </div>
-
-  <section class="usages">
-    <article class="usage">
-      <h2>Une seule fois</h2>
-      <p>On ne dit bonjour qu'<strong>une fois par jour et par personne</strong>. Se recroiser dans le couloir dix minutes plus tard ne rouvre pas le droit à un second bonjour&#8239;: on dit «&#8239;<strong>re</strong>&#8239;», ou rien du tout.</p>
-      <p>Dans un commerce, il ouvre la transaction avant la demande&#8239;: «&#8239;Bonjour, je voudrais…&#8239;». L'oublier s'entend.</p>
-    </article>
-
-    <article class="usage">
-      <h2>La bise, par région</h2>
-      <p>Le nombre varie selon le département. En cas de doute, on laisse l'autre commencer.</p>
-      <dl class="bises">
-        <div><dt>Paris, Île-de-France</dt><dd>2</dd></div>
-        <div><dt>Finistère</dt><dd>1</dd></div>
-        <div><dt>Vaucluse, Drôme</dt><dd>3</dd></div>
-        <div><dt>Loire-Atlantique, Vendée</dt><dd>4</dd></div>
-        <div><dt>Au travail, premier jour</dt><dd>0</dd></div>
-      </dl>
-    </article>
-
-    <article class="usage">
-      <h2>En partant</h2>
-      <p>La formule de départ dépend de ce qu'il reste de la journée à celui qui s'en va.</p>
-      <dl class="horaires">
-        <div><dt>avant 17&#8239;h</dt><dd><b>Bonne journée</b></dd></div>
-        <div><dt>après 17&#8239;h</dt><dd><b>Bonne soirée</b></dd></div>
-        <div><dt>au coucher</dt><dd><b>Bonne nuit</b>&nbsp;— jamais en arrivant</dd></div>
-        <div><dt>vendredi</dt><dd><b>Bon week-end</b></dd></div>
-      </dl>
-    </article>
+    <div class="heros-voile"></div>
+    <div class="large">
+      <p class="cartouche">Pilote 2027 — en préparation</p>
+      <h1>L'Épopée du scoutisme</h1>
+      <p class="chapo">Un concert-spectacle familial pour revivre l'aventure scoute en chants, en histoires et en émotions.</p>
+      <div class="heros-actions">
+        <a class="bouton bouton-plein" href="#precommandes">Pré-commander mes places</a>
+        <a class="bouton bouton-vide" href="#newsletter">Rester informé</a>
+      </div>
+      <p class="manuscrit">Vos pré-ventes financent directement la création du spectacle.</p>
+    </div>
   </section>
 
-  <div class="pied">
-    <span>«&#8239;Bon matin&#8239;» est québécois, pas français</span>
-    <span>Heure écrite <span class="litteral">14&#8239;h&#8239;32</span>, jamais 14:32</span>
+  <section class="section section-creme" id="projet">
+    <div class="large">
+      <p class="etiquette">Le projet</p>
+      <h2>120 ans après le premier camp, l'aventure monte sur scène</h2>
+      <p class="intro">En 1907, Baden-Powell réunissait vingt garçons sur l'île de Brownsea. Depuis, des millions de jeunes ont chanté autour du feu. <strong>L'Épopée du scoutisme</strong> raconte cette histoire — et elle commence par vous.</p>
+
+      <div class="volets">
+        <article class="volet">
+          <p class="etiquette">Le spectacle</p>
+          <h3>75 à 90 minutes</h3>
+          <p>Chorale locale, narration, chants emblématiques et un grand moment final autour de la Promesse.</p>
+        </article>
+        <article class="volet">
+          <p class="etiquette">Le calendrier</p>
+          <h3>Un pilote en 2027</h3>
+          <p>Quelques villes pilotes, 600 à 900 spectateurs par représentation — premières villes annoncées prochainement.</p>
+        </article>
+        <article class="volet">
+          <p class="etiquette">Le financement</p>
+          <h3>Financé par vous</h3>
+          <p>Le spectacle se construira grâce aux pré-ventes : chaque place réservée nous rapproche de la scène.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-voile" id="precommandes">
+    <div class="large">
+      <p class="etiquette">Pré-ventes</p>
+      <h2>Réservez vos places, financez le spectacle</h2>
+      <p class="intro">Choisissez votre formule. <strong>Aucun paiement n'est encaissé aujourd'hui</strong> : nous enregistrons votre intention et nous vous recontactons dès l'ouverture officielle des pré-ventes.</p>
+
+      <div class="formules">
+        <article class="formule">
+          <p class="montant">20 €</p>
+          <h3>Éclaireur</h3>
+          <p>1 place — vous allumez la première étincelle.</p>
+        </article>
+        <article class="formule">
+          <p class="montant">50 €</p>
+          <h3>Bâtisseur</h3>
+          <p>2 places — vous aidez à construire le spectacle.</p>
+        </article>
+        <article class="formule">
+          <p class="montant">100 €</p>
+          <h3>Pionnier</h3>
+          <p>4 places — vous portez la création du pilote.</p>
+        </article>
+        <article class="formule">
+          <p class="montant">250 € et +</p>
+          <h3>Grand camp</h3>
+          <p>Vous rendez possibles les premières représentations.</p>
+        </article>
+      </div>
+
+      <div class="cadre-formulaire">
+        <p class="titre-formulaire">Chaque place compte — sous réserve de confirmation</p>
+        <form id="form-precommande" novalidate>
+          <div class="champs">
+            <div class="champ">
+              <label for="pc-prenom">Prénom <span class="requis" aria-hidden="true">*</span></label>
+              <input id="pc-prenom" name="prenom" type="text" autocomplete="given-name" required>
+            </div>
+            <div class="champ">
+              <label for="pc-nom">Nom <span class="requis" aria-hidden="true">*</span></label>
+              <input id="pc-nom" name="nom" type="text" autocomplete="family-name" required>
+            </div>
+            <div class="champ">
+              <label for="pc-email">Email <span class="requis" aria-hidden="true">*</span></label>
+              <input id="pc-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="champ">
+              <label for="pc-ville">Ville <span class="requis" aria-hidden="true">*</span></label>
+              <input id="pc-ville" name="ville" type="text" autocomplete="address-level2" required>
+            </div>
+            <div class="champ pleine">
+              <label for="pc-formule">Formule souhaitée</label>
+              <select id="pc-formule" name="formule">
+                <option value="">Choisir…</option>
+                <option>Éclaireur — 20 € (1 place)</option>
+                <option>Bâtisseur — 50 € (2 places)</option>
+                <option>Pionnier — 100 € (4 places)</option>
+                <option>Grand camp — 250 € et +</option>
+              </select>
+            </div>
+            <div class="pleine">
+              <label class="case">
+                <input type="checkbox" name="newsletter" value="oui" checked>
+                Je souhaite aussi recevoir les nouvelles du projet
+              </label>
+            </div>
+          </div>
+          <div class="pied-formulaire">
+            <button class="bouton bouton-plein" type="submit">Réserver mes places</button>
+            <p class="mention">Aucun paiement n'est encaissé à ce stade : vous serez contacté pour confirmer votre réservation.</p>
+          </div>
+          <p class="retour" id="retour-precommande" hidden role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-foret" id="newsletter">
+    <div class="large">
+      <p class="etiquette">Newsletter</p>
+      <h2>L'aventure commence en 2027</h2>
+      <p class="intro">Villes pilotes, ouverture des pré-ventes, coulisses de la création : recevez chaque nouvelle du spectacle avant tout le monde.</p>
+
+      <div class="cadre-formulaire">
+        <form id="form-newsletter" novalidate>
+          <div class="champs">
+            <div class="champ">
+              <label for="nl-prenom">Prénom <span class="requis" aria-hidden="true">*</span></label>
+              <input id="nl-prenom" name="prenom" type="text" autocomplete="given-name" required>
+            </div>
+            <div class="champ">
+              <label for="nl-email">Email <span class="requis" aria-hidden="true">*</span></label>
+              <input id="nl-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="champ pleine">
+              <label for="nl-ville">Ville (facultatif)</label>
+              <input id="nl-ville" name="ville" type="text" autocomplete="address-level2">
+            </div>
+          </div>
+          <div class="pied-formulaire">
+            <button class="bouton bouton-plein" type="submit">Rejoindre l'aventure</button>
+            <p class="mention">Vos informations servent uniquement à vous tenir informé du projet.</p>
+          </div>
+          <p class="retour" id="retour-newsletter" hidden role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="large">
+    <div>
+      <h2>L'Épopée du scoutisme</h2>
+      <p>Un concert-spectacle familial en préparation. Pilote envisagé au printemps 2027, sous réserve de confirmation.</p>
+    </div>
+    <div class="pied-liens">
+      <a href="#precommandes">Pré-commander</a>
+      <a href="#newsletter">Rester informé</a>
+    </div>
+    <p class="copyright">© <span id="annee">2026</span> L'Épopée du scoutisme — projet en construction.</p>
   </div>
-</div>
+</footer>
 
 <script>
-  var FINE = ' ';   /* espace fine insécable */
-  var INSEC = ' ';  /* espace insécable */
+  /* -------------------------------------------------------------------
+     Raccordement des formulaires.
 
-  var elMot = document.getElementById('mot');
-  var elNote = document.getElementById('note');
-  var elHeure = document.getElementById('heure');
-  var elDate = document.getElementById('date');
-  var elPhrase = document.getElementById('phrase');
-  var btnVous = document.getElementById('btn-vous');
-  var btnTu = document.getElementById('btn-tu');
+     ENDPOINT vide = rien n'est envoyé : le formulaire valide les champs
+     et le prévient honnêtement le visiteur. Renseigner une URL qui
+     accepte un POST (Formspree, Basin, Netlify Forms, Google Apps
+     Script…) suffit à le rendre opérationnel, sans autre changement.
+  ------------------------------------------------------------------- */
+  var ENDPOINT = '';
 
-  var registre = 'vous';
-  var motActuel = '';
-  var premierRendu = true;
+  document.getElementById('annee').textContent = new Date().getFullYear();
 
-  function creneau(h) {
-    if (h < 5) return {
-      mot: 'Bonsoir',
-      note: 'À cette heure-ci la journée n\'a pas recommencé : on dit encore bonsoir. <em>Bonne nuit</em> se garde pour le moment où l\'un des deux va vraiment se coucher.'
-    };
-    if (h < 12) return {
-      mot: 'Bonjour',
-      note: 'Le matin, c\'est bonjour — et rien d\'autre. Le français n\'a pas de salutation propre au matin : <em>bon matin</em> s\'entend au Québec, pas ici.'
-    };
-    if (h < 18) return {
-      mot: 'Bonjour',
-      note: 'L\'après-midi reste le territoire de bonjour. <em>Bon après-midi</em> existe, mais pour partir, pas pour arriver.'
-    };
-    return {
-      mot: 'Bonsoir',
-      note: 'Le soir venu, bonjour devient bonsoir — vers 18 heures, sans règle écrite. Dire bonjour à 20&#8239;h passe pour une distraction, pas pour une faute.'
-    };
-  }
+  function brancher(idForm, idRetour, messageSucces) {
+    var form = document.getElementById(idForm);
+    var retour = document.getElementById(idRetour);
+    var bouton = form.querySelector('button[type="submit"]');
+    var libelle = bouton.textContent;
 
-  function poserMot(mot) {
-    if (mot === motActuel) return;
-    motActuel = mot;
-    elMot.setAttribute('aria-label', mot);
-    elMot.textContent = '';
-    var lettres = mot.split('').concat([',']);
-    lettres.forEach(function (l, i) {
-      var s = document.createElement('span');
-      s.textContent = l;
-      if (l === ',') s.className = 'virgule';
-      if (premierRendu) s.style.animationDelay = (i * 45) + 'ms';
-      else s.style.animation = 'none';
-      elMot.appendChild(s);
+    function dire(texte, erreur) {
+      retour.textContent = texte;
+      retour.classList.toggle('erreur', !!erreur);
+      retour.hidden = false;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        var premier = form.querySelector(':invalid');
+        if (premier) premier.focus();
+        dire('Merci de compléter les champs obligatoires.', true);
+        return;
+      }
+
+      var donnees = new FormData(form);
+
+      if (!ENDPOINT) {
+        dire('Ce formulaire n’est pas encore raccordé : renseignez ENDPOINT dans index.html avant la mise en ligne (voir le README).', true);
+        return;
+      }
+
+      bouton.disabled = true;
+      bouton.textContent = 'Envoi…';
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: donnees
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        form.reset();
+        dire(messageSucces, false);
+      }).catch(function () {
+        dire('L’envoi a échoué. Réessayez dans un instant.', true);
+      }).then(function () {
+        bouton.disabled = false;
+        bouton.textContent = libelle;
+      });
     });
-    premierRendu = false;
   }
 
-  function poserPhrase() {
-    var soir = motActuel === 'Bonsoir';
-    var txt = registre === 'vous'
-      ? '«' + FINE + (soir ? 'Bonsoir' : 'Bonjour') + ', comment allez-vous' + FINE + '?' + FINE + '»'
-      : '«' + FINE + 'Salut, ça va' + FINE + '?' + FINE + '»';
-    elPhrase.textContent = txt;
-    btnVous.setAttribute('aria-pressed', String(registre === 'vous'));
-    btnTu.setAttribute('aria-pressed', String(registre === 'tu'));
-  }
-
-  function rendre() {
-    var d = new Date();
-    var c = creneau(d.getHours());
-    poserMot(c.mot);
-    elNote.innerHTML = c.note;
-    elHeure.textContent = d.getHours() + INSEC + 'h' + INSEC + String(d.getMinutes()).padStart(2, '0');
-    elDate.textContent = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-    poserPhrase();
-  }
-
-  btnVous.addEventListener('click', function () { registre = 'vous'; poserPhrase(); });
-  btnTu.addEventListener('click', function () { registre = 'tu'; poserPhrase(); });
-
-  rendre();
-  setInterval(rendre, 20000);
+  brancher(
+    'form-precommande',
+    'retour-precommande',
+    'Merci ! Votre intention de réservation est enregistrée. Nous vous recontactons dès l’ouverture des pré-ventes.'
+  );
+  brancher(
+    'form-newsletter',
+    'retour-newsletter',
+    'Merci ! Vous recevrez les prochaines nouvelles du spectacle.'
+  );
 </script>
 </body>
 </html>
