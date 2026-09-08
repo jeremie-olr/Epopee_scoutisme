@@ -28,11 +28,23 @@ Version statique, sans dépendance ni build : un seul fichier [`index.html`](ind
 
 > Ne réutilisez pas une image trouvée sur un réseau social : une republication ne confère aucun droit. Les photographies du camp de Brownsea (août 1907) disponibles sur Wikimedia Commons sont de très faible résolution et signalées comme domaine public *aux États-Unis seulement* — insuffisant pour un site français. Passez par le détenteur du fonds.
 
-**Les formulaires attendent un déploiement Netlify.** Ils sont câblés pour **Netlify Forms** : chaque formulaire porte un `name`, l'attribut `data-netlify="true"`, un champ caché `form-name` et un leurre anti-spam `bot-field`. Le JavaScript poste vers la racine du site (`ENDPOINT = '/'`), ce que Netlify intercepte pour déposer la soumission dans *Site configuration → Forms*. Aucun serveur à écrire.
+**Les formulaires ne sont pas raccordés.** Une adresse par formulaire, en haut du `<script>` :
 
-> ⚠️ **En local, le test est trompeur** : un simple serveur de fichiers répond `200` à un `POST` sur `/`, et le formulaire paraîtra fonctionner alors que rien n'est enregistré. Seul un déploiement Netlify permet de vérifier réellement.
+```js
+var ENDPOINTS = {
+  precommande: '',
+  newsletter: ''
+};
+```
 
-Pour héberger ailleurs, remplacer `'/'` par l'URL d'un service acceptant un `POST` (Formspree, Basin, Google Apps Script…). Valeur vide : rien n'est envoyé et le formulaire l'annonce au visiteur.
+- **Formspree** — coller l'URL fournie à la création du formulaire, de la forme `https://formspree.io/f/xxxxxxxx`. Avec un seul endpoint disponible, laisser `newsletter` vide : les deux formulaires l'utiliseront et le champ caché `form-name` permet de les distinguer dans les soumissions reçues.
+- **Netlify** — mettre `'/'` dans les deux. Les attributs `data-netlify="true"` et le champ `form-name` sont déjà en place, ainsi qu'un leurre anti-spam `bot-field` ; les soumissions arrivent dans *Site configuration → Forms*.
+
+Tant qu'une adresse est vide, le formulaire valide les champs puis **annonce au visiteur que sa demande n'a pas été envoyée**, au lieu de le remercier dans le vide.
+
+> ⚠️ **GitHub Pages ne peut rien recevoir** : c'est un hébergeur de fichiers statiques, il n'accepte aucun `POST`. Sur Pages, un service tiers comme Formspree est donc indispensable.
+>
+> ⚠️ **En local, le test est trompeur** : un serveur de fichiers répond `200` à un `POST` sur `/`, et le formulaire paraîtra fonctionner alors que rien n'est enregistré. Seul le site déployé dit la vérité.
 
 ## Choix techniques
 

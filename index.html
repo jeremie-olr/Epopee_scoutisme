@@ -837,22 +837,34 @@
 
 <script>
   /* -------------------------------------------------------------------
-     Raccordement des formulaires — Netlify Forms.
+     Raccordement des formulaires : une adresse par formulaire.
 
-     Sur Netlify, poster vers la racine du site suffit : le service
-     reconnaît le formulaire grâce à data-netlify="true" et au champ
-     caché form-name, puis dépose la soumission dans le tableau de bord
-     (Site configuration → Forms). Aucun serveur à écrire.
+     Formspree — coller ici l'URL fournie à la création du formulaire,
+     de la forme https://formspree.io/f/xxxxxxxx. Si un seul endpoint
+     est disponible, laisser 'newsletter' vide : les deux formulaires
+     l'utiliseront, et le champ form-name permet de les distinguer
+     dans les soumissions reçues.
 
-     Hébergé ailleurs, remplacer '/' par l'URL d'un service qui accepte
-     un POST (Formspree, Basin, Google Apps Script…). Valeur vide : rien
-     n'est envoyé et le formulaire le dit au visiteur.
+     Netlify — mettre '/' dans les deux : le service reconnaît les
+     formulaires grâce à data-netlify="true" et dépose les soumissions
+     dans Site configuration → Forms.
+
+     Valeur vide : rien n'est envoyé, et le formulaire le dit au
+     visiteur au lieu de le remercier dans le vide.
 
      Attention en local : un serveur de fichiers répond 200 à un POST
-     sur '/' et le formulaire semblera fonctionner. Seul un déploiement
-     Netlify permet de vérifier pour de vrai.
+     sur '/'. Le formulaire semblera fonctionner alors que rien n'est
+     enregistré — seul le site déployé dit la vérité.
   ------------------------------------------------------------------- */
-  var ENDPOINT = '/';
+  var ENDPOINTS = {
+    precommande: '',
+    newsletter: ''
+  };
+
+  function adresseDe(form) {
+    var nom = form.getAttribute('name');
+    return ENDPOINTS[nom] || ENDPOINTS.precommande || '';
+  }
 
   document.getElementById('annee').textContent = new Date().getFullYear();
 
@@ -914,12 +926,13 @@
         return;
       }
 
-      if (!ENDPOINT) {
-        dire('Ce formulaire n’est pas encore raccordé : renseignez ENDPOINT dans index.html avant la mise en ligne (voir le README).', true);
+      var adresse = adresseDe(form);
+      if (!adresse) {
+        dire('Ce formulaire n’est pas encore raccordé : votre demande n’a pas été envoyée. Écrivez-nous directement en attendant.', true);
         return;
       }
 
-      /* Netlify accepte le plus sûrement un corps urlencodé. */
+      /* Corps urlencodé : accepté aussi bien par Formspree que par Netlify. */
       var donnees = new URLSearchParams();
       new FormData(form).forEach(function (valeur, cle) {
         donnees.append(cle, valeur);
@@ -928,9 +941,12 @@
       bouton.disabled = true;
       bouton.textContent = 'Envoi…';
 
-      fetch(ENDPOINT, {
+      fetch(adresse, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
         body: donnees.toString()
       }).then(function (r) {
         if (!r.ok) throw new Error(r.status);
